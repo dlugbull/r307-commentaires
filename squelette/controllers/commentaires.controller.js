@@ -45,4 +45,14 @@ function trouver(req, res, next) {
         .catch(next);
 }
 
-module.exports = {lister, creer, parVisiteur, trouver};
+// PATCH /api/commentaires/:id
+function modifier(req, res, next) {
+    const commentaireId = Number(req.params.id);
+    const { texte } = req.body || {};
+    if (!texte) return next(new ErreurHttp(400, 'TEXTE_MANQUANT', 'Le champ texte est obligatoire.'));
+    service.modifier(commentaireId, { texte })
+        .then((commentaire) => res.json(commentaire))
+        .catch(next);
+}
+
+module.exports = {lister, creer, parVisiteur, trouver, modifier};
