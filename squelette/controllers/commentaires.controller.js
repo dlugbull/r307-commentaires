@@ -12,10 +12,20 @@ const ErreurHttp = require('../utils/erreur-http');
 
 // GET /api/articles/:id/commentaires
 function lister(req, res, next){
-    const id = Number(req.params.id);
-    service.lister(id)
+    const articleId = Number(req.params.id);
+    service.lister(articleId)
         .then((commentaires) => res.json(commentaires))
-        .catch(next)
+        .catch(next);
 }
 
-module.exports = {lister};
+// POST /api/articles/:id/commentaires
+function creer(req, res, next) {
+    const articleId = Number(req.params.id);
+    const { nom, texte } = req.body || {};
+    if (!texte || !nom) return next(new ErreurHttp(400, 'CHAMP_MANQUANT', 'Les champs texte et nom sont obligatoires.'));
+    service.creer(articleId, { nom, texte })
+        .then((commentaire) => res.status(201).json(commentaire))
+        .catch(next);
+}
+
+module.exports = {lister, creer};
