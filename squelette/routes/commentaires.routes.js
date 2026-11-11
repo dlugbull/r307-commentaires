@@ -7,10 +7,11 @@
 
 const express = require('express');
 // const verifierJeton = require('../middlewares/jeton');
-// const controleur = require('../controllers/commentaires.controller');
+const controleur = require('../controllers/commentaires.controller');
 
 const router = express.Router();
 
 // les six routes ici
+router.get('/articles/:id/commentaires', controleur.lister)
 
 module.exports = router;
