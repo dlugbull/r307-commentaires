@@ -28,4 +28,13 @@ function creer(req, res, next) {
         .catch(next);
 }
 
-module.exports = {lister, creer};
+// GET /api/commentaires?nom=nom
+function parVisiteur(req, res, next) {
+    const nom = req.query.nom;
+    if (!nom) return next(new ErreurHttp(400, 'CHAMP_MANQUANT', 'Le champ nom est obligatoire.'));
+    service.parVisiteur(nom)
+        .then((commentaire) => res.json(commentaire))
+        .catch(next);
+}
+
+module.exports = {lister, creer, parVisiteur};
