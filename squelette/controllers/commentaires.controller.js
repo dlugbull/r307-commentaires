@@ -55,4 +55,12 @@ function modifier(req, res, next) {
         .catch(next);
 }
 
-module.exports = {lister, creer, parVisiteur, trouver, modifier};
+// DELETE /api/commentaires/:id
+function supprimer(req, res, next) {
+    const commentaireId = Number(req.params.id);
+    service.supprimer(commentaireId)
+        .then(() => res.status(204).end())
+        .catch(next);
+}
+
+module.exports = {lister, creer, parVisiteur, trouver, modifier, supprimer};
